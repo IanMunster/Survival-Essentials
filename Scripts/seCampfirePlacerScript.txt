@@ -1,0 +1,33 @@
+scn seCampfirePlacerScript
+
+ref seCampfireRef
+short fPosX
+short fPosY
+short fPosZ
+short fAngleZ
+
+Begin OnActivate
+	if (GetAR == playerRef) && (playerRef.IsInCombat == 0)
+		if (playerRef.IsInInterior == 0)
+			set fPosX to GetPos x
+			set fPosY to GetPos y
+			set fPosZ to GetPos z
+			set fAngleZ to GetAngle z
+			set seCampfireRef to seCampfireLightDeployed
+			PlaceAtMe seCampfireRef
+			seCampfireRef.SetPosEx fPosX fPosY fPosZ
+			seCampfireRef.SetAngle z fAngleZ
+			Disable
+			MarkForDelete
+			Return
+		else
+			Showmessage seNoCampfireInsideMsg
+			playerRef.AddItem seCampfirePlacer 1
+			Disable
+			MarkForDelete
+			Return
+		endif
+	elseif (playerRef.IsInCombat)
+		ShowMessage seCombatRestrictionsMsg
+	endif
+End

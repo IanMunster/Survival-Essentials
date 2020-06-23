@@ -1,0 +1,8 @@
+scn seSoupbowlScript
+
+Begin GameMode
+	if (playerRef.GetItemCount seSoupbowlMisc > 0) && (playerRef.GetAV Survival >= 50)
+		ShowMessage seSoupbowlMsg
+		playerRef.CIOS seSoupbowlEffect
+	endif
+End

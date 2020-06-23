@@ -1,0 +1,12 @@
+scn seBackpackQuestScript
+
+int iDoOnce
+int bAutoEquip
+
+Begin GameMode
+	if (iDoOnce == 0) && (playerRef.GetItemCount seBackpack == 0) && (playerRef.GetQC VCG01 == 1)
+		playerRef.AddItem seBackpack 1
+		set iDoOnce to 1
+		StopQuest seBackpackQuest
+	endif
+End

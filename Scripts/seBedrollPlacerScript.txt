@@ -1,0 +1,25 @@
+scn seBedrollPlacerScript
+
+ref seBedrollRef
+short fPosX
+short fPosY
+short fPosZ
+short fAngleZ
+
+Begin OnActivate
+	if (GetAR == playerRef) && (playerRef.IsInCombat == 0)
+		set fPosX to GetPos x
+		set fPosY to GetPos y
+		set fPosZ to GetPos z
+		set fAngleZ to GetAngle z
+		set seBedrollRef to seBedrollDeployed
+		PlaceAtMe seBedrollRef 1
+		seBedrollRef.SetPosEx fPosX fPosY fPosZ
+		seBedrollRef.SetAngle z fAngleZ
+		Disable
+		MarkForDelete
+		Return
+	elseif (GetAR == playerRef) && (playerRef.IsInCombat)
+		ShowMessage seCombatRestrictionsMsg
+	endif
+End

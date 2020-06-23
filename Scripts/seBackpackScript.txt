@@ -1,0 +1,60 @@
+scn seBackpackScript
+
+int iEquipToggle
+int iButton
+
+Begin OnActivate
+	if (playerRef.IsInCombat)
+		ShowMessage seCombatRestrictionsMsg
+	else
+		set iEquipToggle to 1
+	endif
+End
+
+Begin OnUnequip
+	if (playerRef.IsInCombat)
+		ShowMessage seCombatRestrictionsMsg
+	else
+		set iEquipToggle to 1
+	endif
+End
+
+Begin GameMode
+	if	(iEquipToggle == 1)
+		set iEquipToggle to 2
+		ShowMessage seBackpackOptionsMsg
+		Return
+	elseif (iEquipToggle == 2)
+		set iButton to GetButtonPressed
+		if (iButton == 0)
+			seBackpackContainerRef.Activate playerRef
+			set iEquipToggle to 0
+			Return
+		elseif (iButton == 1)
+			Activate
+			set iEquipToggle to 0
+			Return
+		elseif (iButton == 2)
+			set iEquipToggle to 0
+			Return
+		elseif (iButton == 3)
+			set seBackpackQuest.bAutoEquip to 1
+			set iEquipToggle to 0
+			Return
+		elseif (iButton == 4)
+			set seBackpackQuest.bAutoEquip to 0
+			set iEquipToggle to 0
+			Return
+		endif
+	endif
+	
+	if (seBackpackQuest.bAutoEquip == 1) && (playerRef.GetItemCount seBackpack == 1) && (iEquipToggle == 0)
+		playerRef.EquipItem seBackpack
+	endif
+	
+	if (seBackpackContainerRef.GetItemCount seBackpack == 1)
+		ShowMessage seBackpackInBackpackMsg
+		seBackpackContainerRef.RemoveItem seBackpack 1
+		playerRef.AddItem seBackpack 1
+	endif
+End

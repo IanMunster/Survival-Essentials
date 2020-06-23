@@ -1,0 +1,23 @@
+scn seCampfireDeployedScript
+
+ref rActionRef
+
+Begin OnActivate
+	set rActionRef to GetAR
+	if (rActionRef == playerRef) && (playerRef.IsInCombat == 0)
+		if (playerRef.IsSneaking)
+			playerRef.AddItem seCampfirePlacer 1
+			Disable
+			MarkForDelete
+			Return
+		else
+			playerRef.Craft CampfireRecipes
+			Return
+		endif
+	elseif (rActionRef == playerRef) && (playerRef.IsInCombat)
+			ShowMessage seCombatRestrictionsMsg
+			Return
+	elseif (rActionRef != playerRef)
+		rActionRef.Activate
+	endif
+End

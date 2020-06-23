@@ -1,0 +1,16 @@
+scn seBedrollDeployedScript
+
+Begin OnActivate
+	if (GetAR != playerRef) && (playerRef.IsInCombat == 0)
+		if (playerRef.IsSneaking)
+			playerRef.AddItem seBedrollPlacer 1
+			Disable
+			MarkForDelete
+			Return
+		else
+			Activate
+		endif
+	elseif (GetAR == playerRef) && (playerRef.IsInCombat)
+		ShowMessage seCombatRestrictionsMsg
+	endif
+End
